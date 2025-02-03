@@ -1,6 +1,4 @@
-# SAC-MS
-A comprehensive sports facility management system that integrates equipment inventory tracking and court reservation capabilities for the Student Activity Center (SAC).
-Here's the content formatted in markdown:
+
 
 # Full Stack Development with NiceGUI, Flask, and SQLite
 
