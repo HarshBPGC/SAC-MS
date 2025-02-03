@@ -12,14 +12,10 @@ This document provides a step-by-step guide to setting up a very basic full-stac
 
 ## Step 1: Set Up the Project
 
-Create a new directory for your project:
+Create a new directory for your project, and open that folder in VSCode
+`
 
-```sh
-mkdir nicegui_flask_sqlite
-cd nicegui_flask_sqlite
-```
-
-Create a virtual environment (optional but recommended):
+Create a virtual environment:
 
 ```sh
 python -m venv venv
@@ -29,7 +25,9 @@ source venv/bin/activate  # On Windows use `venv\Scripts\activate`
 Install the required dependencies:
 
 ```sh
-pip install flask nicegui sqlite3
+pip install flask
+pip install nicegui
+sudo apt-get sqlite3 //this will vary for mac/windows. Just search for sqlite3 installation. 
 ```
 
 ## Step 2: Set Up the Backend (Flask API)
