@@ -27,7 +27,7 @@ db_config_readonly = {
 db_config_dba = {
     'host': 'localhost',
     'user': 'sac_dba',
-    'password': 'Dbapassword',
+    'password': 'DBApassword',
     'database': 'SAC'
 }
 
@@ -147,24 +147,25 @@ def get_equipment():
 def create_booking():
     """
     Create a new booking record.
-    Expect JSON with booking_time, status, bits_id, timeslot_id, location_id
-    Example: { "booking_time":"2025-03-20 10:00:00", "status":"Pending", "bits_id":1, "timeslot_id":1, "location_id":1 }
+    Expect JSON with booking_time, status, UID, timeslot_id, LID, IID
+    Example: { "booking_time":"2025-03-20 10:00:00", "status":"Pending", "UID":1, "timeslot_id":1, "LID":1, "IID":1 }
     """
     try:
         data = request.json
         booking_time = data['booking_time']
         status = data['status']
-        bits_id = data['bits_id']
+        uid = data['UID']
         timeslot_id = data['timeslot_id']
-        location_id = data['location_id']
+        lid = data['LID']
+        iid = data['IID']
 
         conn = mysql.connector.connect(**db_config)
         cursor = conn.cursor()
         insert_query = """
-            INSERT INTO BOOKING (booking_time, status, bits_id, timeslot_id, location_id)
-            VALUES (%s, %s, %s, %s, %s)
+            INSERT INTO BOOKING (booking_time, status, UID, timeslot_id, LID, IID)
+            VALUES (%s, %s, %s, %s, %s, %s)
         """
-        cursor.execute(insert_query, (booking_time, status, bits_id, timeslot_id, location_id))
+        cursor.execute(insert_query, (booking_time, status, uid, timeslot_id, lid, iid))
         conn.commit()
 
         return jsonify({"message": "Booking created!", "booking_id": cursor.lastrowid}), 201

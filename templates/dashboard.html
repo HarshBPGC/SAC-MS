@@ -178,9 +178,10 @@
       const formData = {
         booking_time: document.getElementById('booking_time').value.replace('T', ' '),
         status: document.getElementById('status').value,
-        bits_id: parseInt(document.getElementById('bits_id').value),
+        UID: parseInt(document.getElementById('bits_id').value),
         timeslot_id: parseInt(document.getElementById('timeslot_id').value),
-        location_id: parseInt(document.getElementById('location_id').value)
+        LID: parseInt(document.getElementById('location_id').value),
+        IID: 1 // Default equipment ID
       };
 
       try {
