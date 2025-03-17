@@ -1,125 +1,61 @@
+# SAC Management System
 
+A Flask-based web application for managing Sports Activity Center (SAC) equipment, bookings, and resources.
 
-# Full Stack Development with NiceGUI, Flask, and SQLite
+## Setup Instructions
 
-This document provides a step-by-step guide to setting up a very basic full-stack application using NiceGUI for the frontend, Flask for the backend, and SQLite for data storage.
+### Prerequisites
+- Python 3.8 or higher
+- MySQL Server
+- Git
 
-## Prerequisites
+### Step 1: Clone the Repository
+```bash
+git clone https://github.com/yourusername/sac-management-system.git
+```
 
-* Python installed
-* Basic understanding of Python and web development
-* A virtual environment (optional but recommended)
-
-## Step 1: Set Up the Project
-
-Create a new directory for your project, and open that folder in VSCode
-`
-
-Create a virtual environment:
-
-```sh
+### Step 2: Set Up the Virtual Environment
+Navigate to the project directory and create a virtual environment:
+```bash
 python -m venv venv
-source venv/bin/activate  # On Windows use `venv\Scripts\activate`
 ```
 
-Install the required dependencies:
+### Step 3: Activate the Virtual Environment
 
-```sh
-pip install flask
-pip install nicegui
-sudo apt-get sqlite3 //this will vary for mac/windows. Just search for sqlite3 installation. 
+**For Windows:**
+```bash
+venv\Scripts\activate
 ```
 
-## Step 2: Set Up the Backend (Flask API)
-
-Create a file `backend.py`:
-
-```python
-from flask import Flask, request, jsonify
-import sqlite3
-
-app = Flask(__name__)
-
-# Initialize the database
-def init_db():
-    conn = sqlite3.connect("data.db")
-    cursor = conn.cursor()
-    cursor.execute("CREATE TABLE IF NOT EXISTS prompts (id INTEGER PRIMARY KEY, text TEXT)")
-    conn.commit()
-    conn.close()
-
-init_db()
-
-@app.route("/process", methods=["POST"])
-def process_prompt():
-    data = request.json
-    prompt = data.get("prompt", "")
-    
-    # Modify the prompt string (e.g., make it uppercase)
-    processed_prompt = prompt.upper()
-    
-    # Store in SQLite
-    conn = sqlite3.connect("data.db")
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO prompts (text) VALUES (?)", (processed_prompt,))
-    conn.commit()
-    conn.close()
-    
-    return jsonify({"processed": processed_prompt})
-
-if __name__ == "__main__":
-    app.run(debug=True)
+**For macOS/Linux:**
+```bash
+source venv/bin/activate
 ```
 
-Run the backend server:
-
-```sh
-python backend.py
+### Step 4: Install Dependencies
+With the virtual environment activated, install the required packages:
+```bash
+pip install -r requirements.txt
 ```
 
-This will start the Flask API on `http://127.0.0.1:5000`.
+### Step 5: Configure the Database
+Ensure your MySQL server is running and update your configuration settings (e.g., in a `.env` or `config.py` file) with your database credentials.
 
-## Step 3: Set Up the Frontend (NiceGUI)
-
-Create a file `frontend.py`:
-
-```python
-from nicegui import ui
-import requests
-
-def send_prompt():
-    response = requests.post("http://127.0.0.1:5000/process", json={"prompt": user_input.value})
-    result_label.set_text(response.json().get("processed", "Error"))
-
-ui.label("Enter a prompt:")
-user_input = ui.input()
-ui.button("Submit", on_click=send_prompt)
-result_label = ui.label("Processed text will appear here.")
-
-ui.run()
+### Step 6: Create and Initialize the Database
+Log in to your MySQL server and create a database named `SAC`:
+```sql
+CREATE DATABASE SAC;
+USE SAC;
+```
+Execute the provided SQL scripts to set up the database schema and initial data:
+```bash
+mysql -u your_username -p SAC < sqls/tables.sql
+mysql -u your_username -p SAC < sqls/users.sql
 ```
 
-Run the frontend:
-
-```sh
-python frontend.py
+### Step 7: Start the Application
+Launch the Flask development server:
+```bash
+flask run
 ```
 
-This will start the NiceGUI frontend and open a web page.
-
-## Step 4: Test the Application
-
-1. Open the frontend in a browser.
-2. Enter a text string and click "Submit".
-3. The backend will process the string (convert it to uppercase) and return the result.
-4. The processed string will be displayed on the frontend.
-
-## Conclusion
-
-This project demonstrates a minimal full-stack setup using:
-
-* **NiceGUI** for frontend
-* **Flask** for backend
-* **SQLite** for data storage
-
-This should provide a foundational understanding of full-stack web development with Python.

@@ -97,3 +97,27 @@ CREATE TABLE PURCHASE (
 );
 
 ALTER TABLE BOOKING MODIFY COLUMN BID INT AUTO_INCREMENT;
+
+-- Minimal sample data for creating bookings
+
+-- Insert a single incharge
+INSERT INTO INCHARGE (IID, phone_no, email, name, department) VALUES
+(1, '9876543210', 'john.doe@bits-pilani.ac.in', 'John Doe', 'Sports');
+
+-- Insert a few users with BITS IDs
+INSERT INTO USER (UID, password, bits_id, hostel_number) VALUES
+(1, '$2a$10$xDQGhkBb8JDIwCbVPx5rJe', '2023A7PS0343G', 101),
+(2, '$2a$10$LKJdF8oLK9Jd7KJHKJHDkj', '2022B4PS1234H', 202);
+
+-- Insert a location
+INSERT INTO LOCATION (LID, name, type, capacity) VALUES
+(1, 'Sports Complex', 'Sports', 200);
+
+-- Insert time slots for the location
+INSERT INTO TIME_SLOT (timeslot_id, LID, start_time, end_time) VALUES
+(1, 1, '08:00:00', '10:00:00'),
+(2, 1, '10:30:00', '12:30:00');
+
+-- Insert equipment
+INSERT INTO EQUIPMENT (EID, equipment_name, location, quantity) VALUES
+(1, 'Basketball', 'Sports Complex', 10);
